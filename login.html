@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Diário de Bordo — Entrar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-body">
+  <form class="login-card" id="loginForm">
+    <h1 class="title">Diário de Bordo</h1>
+    <p class="subtitle">entre com sua conta</p>
+    <label for="username">Usuário</label>
+    <input type="text" id="username" autocomplete="username" required>
+    <label for="password">Senha</label>
+    <input type="password" id="password" autocomplete="current-password" required>
+    <button type="submit" class="btn btn-primary" id="loginBtn">Entrar</button>
+    <p class="login-error" id="loginError" hidden></p>
+  </form>
+  <script src="js/login.js"></script>
+</body>
+</html>

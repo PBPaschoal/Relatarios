@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Diário de Bordo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="toast-banner" id="toastBanner" hidden></div>
+
+<div id="app">
+  <header class="topbar">
+    <div class="topbar-actions">
+      <button class="link-btn" id="manageUsersBtn" hidden>Usuários</button>
+      <button class="link-btn" id="logoutBtn">Sair</button>
+    </div>
+    <div class="datenav">
+      <button id="prevDay" aria-label="Dia anterior">‹</button>
+      <span id="dateLabel">—</span>
+      <button id="nextDay" aria-label="Próximo dia">›</button>
+    </div>
+    <h1 class="title">Diário de Bordo</h1>
+    <p class="subtitle" id="subtitle">carregando…</p>
+  </header>
+
+  <section class="lamp-banner" id="lampBanner" hidden>
+    <span class="lamp-dot" id="lampDot"></span>
+    <div class="lamp-body">
+      <div class="lamp-label" id="lampLabel">EM ANDAMENTO</div>
+      <div class="lamp-activity" id="lampActivity">—</div>
+      <div class="lamp-elapsed" id="lampElapsed">há 0 min</div>
+      <button class="btn btn-ghost lamp-stop-btn" id="lampStopBtn">Encerrar atividade</button>
+    </div>
+  </section>
+
+  <main class="ledger" id="ledger"></main>
+  <div class="empty-state" id="emptyState" hidden>
+    Nenhum registro ainda neste dia.<br>Toque em "+ Nova atividade" para começar.
+  </div>
+</div>
+
+<div class="bottombar">
+  <button class="btn btn-ghost" id="openReport">Gerar relatório</button>
+  <button class="btn btn-primary" id="openAdd">+ Nova atividade</button>
+</div>
+
+<div class="sheet-overlay" id="addOverlay" hidden>
+  <div class="sheet">
+    <h2 id="sheetTitle">Nova atividade</h2>
+    <label for="entryText">O que você está fazendo</label>
+    <textarea id="entryText" rows="3" placeholder="Ex: ajuste de som na TV do auditório"></textarea>
+
+    <label for="entryTime">Início</label>
+    <div class="time-row">
+      <input type="time" id="entryTime">
+      <div class="quick-adjust">
+        <button type="button" class="qa-start" data-min="-30">-30</button>
+        <button type="button" class="qa-start" data-min="-15">-15</button>
+        <button type="button" class="qa-start" data-min="-5">-5</button>
+        <button type="button" class="qa-start" data-min="0">agora</button>
+      </div>
+    </div>
+
+    <label for="entryEndTime">Término (opcional)</label>
+    <div class="time-row">
+      <input type="time" id="entryEndTime">
+      <div class="quick-adjust">
+        <button type="button" class="qa-end" data-min="-30">-30</button>
+        <button type="button" class="qa-end" data-min="-15">-15</button>
+        <button type="button" class="qa-end" data-min="-5">-5</button>
+        <button type="button" class="qa-end" data-min="0">agora</button>
+      </div>
+      <button type="button" class="btn btn-text" id="clearEnd">Limpar</button>
+    </div>
+    <p class="hint">Deixe em branco se a atividade ainda está em andamento.</p>
+
+    <div class="sheet-actions">
+      <button class="btn btn-text danger" id="deleteEntry" hidden>Excluir</button>
+      <button class="btn btn-text" id="cancelEntry">Cancelar</button>
+      <button class="btn btn-primary" id="saveEntry">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet-overlay" id="reportOverlay" hidden>
+  <div class="sheet sheet-report">
+    <h2>Relatório do dia</h2>
+    <pre class="report-preview" id="reportPreview"></pre>
+    <div class="sheet-actions">
+      <button class="btn btn-text" id="closeReport">Fechar</button>
+      <button class="btn btn-ghost" id="copyReport">Copiar texto</button>
+      <button class="btn btn-primary" id="pdfReport">Baixar PDF</button>
+    </div>
+    <div class="toast" id="toast" hidden>Copiado!</div>
+  </div>
+</div>
+
+<div class="sheet-overlay" id="usersOverlay" hidden>
+  <div class="sheet">
+    <h2>Criar novo usuário</h2>
+    <label for="newName">Nome completo</label>
+    <input type="text" id="newName" placeholder="Ex: Bruno Paschoal">
+    <label for="newUsername">Usuário de login</label>
+    <input type="text" id="newUsername" placeholder="Ex: bruno">
+    <label for="newPassword">Senha</label>
+    <input type="password" id="newPassword" placeholder="mín. 6 caracteres">
+    <label for="newRole">Tipo de conta</label>
+    <select id="newRole">
+      <option value="user">Usuário comum</option>
+      <option value="admin">Administrador</option>
+    </select>
+    <p class="hint" id="newUserMsg"></p>
+    <div class="sheet-actions">
+      <button class="btn btn-text" id="closeUsers">Fechar</button>
+      <button class="btn btn-primary" id="createUserBtn">Criar usuário</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
