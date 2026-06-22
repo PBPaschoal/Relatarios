@@ -1,7 +1,10 @@
 <?php
-if (!defined('API_ENTRY')) { die('Acesso direto não permitido.'); }
+if (!defined('API_ENTRY')) {
+    die('Acesso direto não permitido.');
+}
 
-function getDB() {
+function getDB()
+{
     static $pdo = null;
     if ($pdo === null) {
         try {
@@ -9,7 +12,7 @@ function getDB() {
                 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
                 DB_USER,
                 DB_PASS,
-                [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ]
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
         } catch (PDOException $e) {
             http_response_code(500);

@@ -1,6 +1,6 @@
 (function(){
-  var ENTRIES_API = '/api/entries.php';
-  var AUTH_API = '/api/auth.php';
+  var ENTRIES_API = 'api/entries.php';
+  var AUTH_API = 'api/auth.php';
 
   var state = { date: new Date(), entries: [], user: null };
   var editingId = null;
@@ -23,19 +23,25 @@
   function escapeHTML(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
   function apiCall(url, opts){
-    opts = opts || {};
-    return fetch(url, {
-      method: opts.method || 'GET',
-      credentials: 'same-origin',
-      headers: Object.assign({ 'Content-Type':'application/json' }, opts.headers || {}),
-      body: opts.body ? JSON.stringify(opts.body) : undefined
-    }).then(function(res){
-      return res.json().catch(function(){ return {}; }).then(function(data){
-        if(!res.ok){ throw new Error(data.error || ('Erro ' + res.status)); }
-        return data;
-      });
+  opts = opts || {};
+  return fetch(url, {
+    method: opts.method || 'GET',
+    credentials: 'same-origin',
+    headers: Object.assign({ 'Content-Type':'application/json' }, opts.headers || {}),
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  }).then(function(res){
+    return res.text().then(function(raw){
+      var data;
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch(e){
+        throw new Error('Resposta do servidor não é JSON válido. Início da resposta: "' + raw.slice(0,150) + '"');
+      }
+      if(!res.ok){ throw new Error(data.error || ('Erro ' + res.status)); }
+      return data;
     });
-  }
+  });
+}
 
   var els = {};
   ['toastBanner','manageUsersBtn','logoutBtn','dateLabel','subtitle','prevDay','nextDay',

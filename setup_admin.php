@@ -1,7 +1,7 @@
 <?php
 define('API_ENTRY', true);
-require_once __DIR__ . '/home/u854704211/api/config.php';
-require_once __DIR__ . '/home/u854704211/api/db.php';
+require_once __DIR__ . '/api/config.php';
+require_once __DIR__ . '/api/db.php';
 
 $pdo = getDB();
 $count = (int)$pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
